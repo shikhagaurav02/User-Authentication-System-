@@ -14,7 +14,7 @@ export const loginUser=async(req,res)=>{
     const token=JsonWebTokenError.sign(
         {id:user._id} ,
         process.env.Jwt_SECRET,
-        
-        }
-    )
-}
+        {expiresIn:"1d"}
+    );
+    res.json({token});
+};
