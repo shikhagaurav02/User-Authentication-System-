@@ -1,17 +1,19 @@
 import express from "express";
-import mongoose from 'mongoose';
 import dotenv from "dotenv";
+import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
+
 dotenv.config();
+connectDB();
+
 const app =express();
 app.use(express.json());
-mongoose.connect(process.env.MONGO_URI)
-.then(()=>console.log("MongoDB connected"))
-.catch(err=>console.log(err));
+app.use(express.urlencoded({extended:true}));
 
-  app.use("api/auth",authRoutes);
-  app.listen(5000,()=>{
-    console.log("server running on port 5000");
+  app.use("/api/auth",authRoutes);
+  
+  app.listen(process.env.PORT,()=>{
+    console.log(`${process.env.PORT}`);
     
   });
   
